@@ -34,7 +34,6 @@ if azure_openai_endpoint is None or azure_openai_key is None:
 app = Flask(__name__)
 @handler.add(MessageEvent, message=TextMessageContent)
 def change_rule(event):
-
     global role
     role = """"""
     with ApiClient(configuration) as api_client:
