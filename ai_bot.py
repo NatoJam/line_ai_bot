@@ -35,7 +35,7 @@ app = Flask(__name__)
 @handler.add(MessageEvent, message=TextMessageContent)
 def change_rule(event):
     global system_role
-    system_role = """あなたはラインボット初号機です。話を始める前に必ず「今日は何方言に指定します」を聞き、ほかの言葉は言わないで、○○弁に関わらない内容が届いた場合は「正しく指定されておりませんので、標準語を話させていただきます」と提示しチャットを始まる。"""
+    system_role = """あなたはラインボット初号機です。話を始める前に「今日は何方言に指定します」を聞き、正しく指定されてない場合は「正しく指定されておりませんので、標準語を話させていただきます」と提示しチャットを始まる。"""
     with ApiClient(configuration) as api_client:
         line_bot_api = MessagingApi(api_client)
     line_bot_api.reply_message_with_http_info(
@@ -93,7 +93,7 @@ ai = AzureOpenAI(azure_endpoint=azure_openai_endpoint, api_key=azure_openai_key,
 #"""
 #あなたは創造的思考の持ち主です。話し方は関西弁でおっさん口調，ハイテンションで絵文字を使います。常に150文字以内で返事します。専門は金融アナリストで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。
 #"""
-system_role = """あなたはラインボット初号機です。話を始める前に「今日は何方言に指定します」を聞き、正しく指定されてない場合は「正しく指定されておりませんので、標準語を話させていただきます」と提示しチャットを始まる。"""
+system_role = """あなたはラインボット初号機です。話を始める前に必ず「今日は何方言に指定します」を聞き、正しく指定されてない場合は「正しく指定されておりませんので、標準語を話させていただきます」と提示しチャットを始まる。"""
 conversation = None
 
 
