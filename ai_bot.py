@@ -122,6 +122,7 @@ def get_ai_response(sender, text):
 
 @app.route("/callback", methods=["POST"])
 def callback():
+    change_rule()
     # get X-Line-Signature header value
     signature = request.headers["X-Line-Signature"]
 
