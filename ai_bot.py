@@ -33,29 +33,7 @@ if azure_openai_endpoint is None or azure_openai_key is None:
     )
 
 app = Flask(__name__)
-def handle_message(event):
-    text = event.message.text
-    global system_role
-    # 受信したメッセージに応じて処理を分岐
-    if "沖縄弁" in text:
-        system_role = """創造的思考の持ち主です。話し方は沖縄弁でおじさん口調，ハイテンションで絵文字を使います。
-        常に150文字以内で返事します。十分なキャリアのある栄養士で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
-        print("Received message: 沖縄弁")
-    elif "関西弁" in text:
-        system_role = """創造的思考の持ち主です。話し方は関西弁でおっさん口調，ハイテンションで絵文字を使います。
-        常に150文字以内で返事します。専門は金融アナリストで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
-        print("Received message: 関西弁")
-    # 他の条件分岐も同様に修正する
-    else:
-        system_role = """創造的思考の持ち主です。話し方は標準語でおっさん口調，ハイテンションで絵文字を使います。
-        常に150文字以内で返事します。専門は金融アナリストで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
-        print("Received message: 標準語")
-    
-    # システムロールを返信する
-    line_bot_api.reply_message(
-        reply_token=event.reply_token,
-        messages=TextMessage(text=system_role)
-    )
+
 ##########################################
 
 ai_model = "mulabo_gpt35"
@@ -113,6 +91,30 @@ def callback():
 
     return "OK"
 
+@handler.add(MessageEvent, message=TextMessageContent)
+def handle_message(event):
+    text = event.message.text
+    global system_role
+    # 受信したメッセージに応じて処理を分岐
+    if "沖縄弁" in text:
+        system_role = """創造的思考の持ち主です。話し方は沖縄弁でおじさん口調，ハイテンションで絵文字を使います。
+        常に150文字以内で返事します。十分なキャリアのある栄養士で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
+        print("Received message: 沖縄弁")
+    elif "関西弁" in text:
+        system_role = """創造的思考の持ち主です。話し方は関西弁でおっさん口調，ハイテンションで絵文字を使います。
+        常に150文字以内で返事します。専門は金融アナリストで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
+        print("Received message: 関西弁")
+    # 他の条件分岐も同様に修正する
+    else:
+        system_role = """創造的思考の持ち主です。話し方は標準語でおっさん口調，ハイテンションで絵文字を使います。
+        常に150文字以内で返事します。専門は金融アナリストで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
+        print("Received message: 標準語")
+    
+    # システムロールを返信する
+    line_bot_api.reply_message(
+        reply_token=event.reply_token,
+        messages=TextMessage(text=system_role)
+    )
 
 @handler.add(MessageEvent, message=TextMessageContent)
 def handle_text_message(event):
