@@ -75,6 +75,7 @@ def get_ai_response(sender, text):
 
 @app.route("/callback", methods=["POST"])
 def callback():
+    global count
     print(system_role)
     print(count)
     # get X-Line-Signature header value
