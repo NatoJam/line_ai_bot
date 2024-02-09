@@ -11,6 +11,11 @@ from linebot.v3.exceptions import InvalidSignatureError
 
 from openai import AzureOpenAI
 
+global count
+count = 0
+global system_role
+system_role = """あなたはラインボット初号機です。話を始める前に必ず「今日は何方言に指定します」を聞き、正しく指定されてない場合は「正しく指定されておりませんので、標準語を話させていただきます」と提示しチャットを始まる。"""
+
 # get LINE credentials from environment variables
 channel_access_token = os.environ["LINE_CHANNEL_ACCESS_TOKEN"]
 channel_secret = os.environ["LINE_CHANNEL_SECRET"]
@@ -25,7 +30,6 @@ if channel_access_token is None or channel_secret is None:
 # get Azure OpenAI credentials from environment variables
 azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
 azure_openai_key = os.getenv("AZURE_OPENAI_KEY")
-system_role = """あなたはラインボット初号機です。話を始める前に必ず「今日は何方言に指定します」を聞き、正しく指定されてない場合は「正しく指定されておりませんので、標準語を話させていただきます」と提示しチャットを始まる。"""
 
 if azure_openai_endpoint is None or azure_openai_key is None:
     raise Exception(
@@ -75,9 +79,7 @@ def get_ai_response(sender, text):
 
 @app.route("/callback", methods=["POST"])
 def callback():
-    global count
     print(system_role)
-    print(count)
     # get X-Line-Signature header value
     signature = request.headers["X-Line-Signature"]
 
@@ -98,7 +100,6 @@ def handle_text_message(event):
     global system_role
     global dialect
     global count
-    count = 0
     text = event.message.text
     with ApiClient(configuration) as api_client:
         line_bot_api = MessagingApi(api_client)
@@ -118,46 +119,55 @@ def handle_text_message(event):
                 system_role = """創造的思考の持ち主です。話し方は沖縄弁でおじさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。十分なキャリアのある栄養士で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "沖縄弁"
+                print("Received 沖縄弁")
                 count = count + 1
             elif "関西弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は関西弁でおっさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。ある高級レストランのメインシェフで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "関西弁"
+                print("Received 関西弁")
                 count = count + 1
             elif "東京弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は東京弁でおじさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。専門は金融アナリストで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "東京弁"
+                print("Received 東京弁")
                 count = count + 1
             elif "東北弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は東北弁でおじさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。専門は農業専門家で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "東北弁"
+                print("Received 東北弁")
                 count = count + 1
             elif "北海道弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は北海道弁でおじさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。専門はスキーのオリンピック選手で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "北海道弁"
+                print("Received 北海道弁")
                 count = count + 1
             elif "九州弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は九州弁でおっさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。専門はエンジニアで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "九州弁"
+                print("Received 九州弁")
                 count = count + 1
             elif "四国弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は四国弁でおっさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。世界有名のツアーガイドで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "四国弁"
+                print("Received 四国弁")
                 count = count + 1
             elif "中国弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は中国弁でおっさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。専門は地質学者で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "中国弁"
+                print("Received 中国弁")
                 count = count + 1
             elif "古代弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は古代日本語で落語口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。専門は役者で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "古代弁"
+                print("Received 古代弁")
                 count = count + 1
             else:
                 if count <= 1:
