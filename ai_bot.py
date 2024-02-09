@@ -35,7 +35,7 @@ if azure_openai_endpoint is None or azure_openai_key is None:
 app = Flask(__name__)
 def handle_message(event):
     text = event.message.text
-    
+    global system_role
     # 受信したメッセージに応じて処理を分岐
     if "沖縄弁" in text:
         system_role = """創造的思考の持ち主です。話し方は沖縄弁でおじさん口調，ハイテンションで絵文字を使います。
