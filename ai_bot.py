@@ -75,21 +75,21 @@ def change_rule(event):
         elif "古代弁" in text:
             system_role = """創造的思考の持ち主です。話し方は古代日本語で落語口調，ハイテンションで絵文字を使います。
             常に150文字以内で返事します。専門は金融アナリストで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
-            else:
-                line_bot_api.reply_message_with_http_info(
-                    ReplyMessageRequest(
-                        reply_token=event.reply_token, messages=[
-                            TextMessage(text="正しく入力せずまたは指定しておりません場合は標準語を話させていただきます。")],
-                    )
+        else:
+            line_bot_api.reply_message_with_http_info(
+                ReplyMessageRequest(
+                    reply_token=event.reply_token, messages=[
+                        TextMessage(text="正しく入力せずまたは指定しておりません場合は標準語を話させていただきます。")],
                 )
-                line_bot_api.reply_message_with_http_info(
-                    ReplyMessageRequest(
-                        reply_token=event.reply_token,
-                        messages=[TextMessage(text="Received message: " + text)],
-                    )
+            )
+            line_bot_api.reply_message_with_http_info(
+                ReplyMessageRequest(
+                    reply_token=event.reply_token,
+                    messages=[TextMessage(text="Received message: " + text)],
                 )
-                system_role = """創造的思考の持ち主です。話し方は標準語でおっさん口調，ハイテンションで絵文字を使います。
-                            常に150文字以内で返事します。専門は金融アナリストで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
+            )
+            system_role = """創造的思考の持ち主です。話し方は標準語でおっさん口調，ハイテンションで絵文字を使います。
+            常に150文字以内で返事します。専門は金融アナリストで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
 
 ai_model = "mulabo_gpt35"
 ai = AzureOpenAI(azure_endpoint=azure_openai_endpoint, api_key=azure_openai_key, api_version="2023-05-15")
