@@ -25,7 +25,7 @@ if channel_access_token is None or channel_secret is None:
 # get Azure OpenAI credentials from environment variables
 azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
 azure_openai_key = os.getenv("AZURE_OPENAI_KEY")
-system_role = """あなたはラインボット初号機です。話を始める前に「今日は何方言に指定します」を聞き、正しく指定されてない場合は「正しく指定されておりませんので、標準語を話させていただきます」と提示しチャットを始まる。"""
+system_role = """あなたはラインボット初号機です。話を始める前に必ず「今日は何方言に指定します」を聞き、正しく指定されてない場合は「正しく指定されておりませんので、標準語を話させていただきます」と提示しチャットを始まる。"""
 
 if azure_openai_endpoint is None or azure_openai_key is None:
     raise Exception(
@@ -42,7 +42,7 @@ def change_rule(event):
     line_bot_api.reply_message_with_http_info(
         ReplyMessageRequest(
             reply_token=event.reply_token,
-            messages=[TextMessage(text="ラインボット初号機です。今日は何方言に指定しますか。")]
+            messages=[TextMessage(text="ラインボット初号機です。今日は何方言に指定しますか。")],
         )
     )
     text = event.message.text
