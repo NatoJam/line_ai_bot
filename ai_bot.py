@@ -116,18 +116,23 @@ def handle_text_message(event):
                 print("Received message: 標準語")            
             # システムロールを返信する
             line_bot_api.reply_message(
-                reply_token=event.reply_token,
-                messages=TextMessage(text=system_role)
+                ReplyMessageRequest(
+                    reply_token=event.reply_token,
+                    messages=[TextMessage(text=system_role)],
+                )
             )
-            # 応答メッセージを返信する
-            line_bot_api.reply_message(
-                reply_token=event.reply_token,
-                messages=TextMessage(text=response)
+            line_bot_api.reply_message_with_http_info(
+                ReplyMessageRequest(
+                    reply_token=event.reply_token,
+                    messages=[TextMessage(text=response)],
+                )
             )
         else:
-            line_bot_api.reply_message(
-                reply_token=event.reply_token,
-                messages=TextMessage(text="Received message: " + text)
+            line_bot_api.reply_message_with_http_info(
+                ReplyMessageRequest(
+                    reply_token=event.reply_token,
+                    messages=[TextMessage(text="Received message: " + text)],
+                )
             )
 
 
