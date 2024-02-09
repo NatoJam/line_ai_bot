@@ -179,19 +179,13 @@ def handle_text_message(event):
                                 TextMessage(text="正しく入力せずまたは指定しておりません場合は標準語を話させていただきます。")],
                         )
                     )
-                line_bot_api.reply_message_with_http_info(
-                    ReplyMessageRequest(
-                        reply_token=event.reply_token,
-                        messages=[
-                            TextMessage(text="よし、今日はどんどん" + dialect + "で行くぜー！"),
-                            TextMessage(text="Received message: " + text)
-                        ],
-                    )
-                )
             line_bot_api.reply_message_with_http_info(
                 ReplyMessageRequest(
                     reply_token=event.reply_token,
-                    messages=[TextMessage(text=response)],
+                    messages=[
+                        TextMessage(text = "よし、今日はどんどん" + dialect + "で行くぜー！"),
+                        TextMessage(text = response)
+                    ],
                 )
             )
         else:
