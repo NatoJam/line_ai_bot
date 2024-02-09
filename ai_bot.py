@@ -103,7 +103,7 @@ def handle_text_message(event):
         if isinstance(event.source, UserSource):
             profile = line_bot_api.get_profile(event.source.user_id)
             response = get_ai_response(profile.display_name, text)
-            while count = 0:
+            while count == 0:
                 line_bot_api.reply_message_with_http_info(
                         ReplyMessageRequest(
                             reply_token=event.reply_token, messages=[
