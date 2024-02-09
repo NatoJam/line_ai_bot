@@ -36,7 +36,10 @@ app = Flask(__name__)
 @handler.add(MessageEvent, message=TextMessageContent)
 def change_rule(event):
     global system_role
+    global text
     system_role = """あなたはラインボット初号機です。話を始める前に必ず「今日は何方言に指定します」を聞き、正しく指定されてない場合は「正しく指定されておりませんので、標準語を話させていただきます」と提示しチャットを始まる。"""
+    text = event.message.text
+    print(text) #log
     with ApiClient(configuration) as api_client:
         line_bot_api = MessagingApi(api_client)
         line_bot_api.reply_message_with_http_info(
@@ -45,7 +48,6 @@ def change_rule(event):
                 messages=[TextMessage(text="ラインボット初号機です。今日は何方言に指定しますか。")],
             )
         )
-        text = event.message.text
         if "沖縄弁" in text:
             system_role = """創造的思考の持ち主です。話し方は沖縄弁でおじさん口調，ハイテンションで絵文字を使います。
             常に150文字以内で返事します。十分なキャリアのある栄養士で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
