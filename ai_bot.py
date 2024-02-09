@@ -119,18 +119,15 @@ def handle_text_message(event):
                 reply_token=event.reply_token,
                 messages=TextMessage(text=system_role)
             )
-            line_bot_api.reply_message_with_http_info(
-                ReplyMessageRequest(
-                    reply_token=event.reply_token,
-                    messages=[TextMessage(text=response)],
-                )
+            # 応答メッセージを返信する
+            line_bot_api.reply_message(
+                reply_token=event.reply_token,
+                messages=TextMessage(text=response)
             )
         else:
-            line_bot_api.reply_message_with_http_info(
-                ReplyMessageRequest(
-                    reply_token=event.reply_token,
-                    messages=[TextMessage(text="Received message: " + text)],
-                )
+            line_bot_api.reply_message(
+                reply_token=event.reply_token,
+                messages=TextMessage(text="Received message: " + text)
             )
 
 
