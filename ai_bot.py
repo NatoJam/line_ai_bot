@@ -105,12 +105,12 @@ def handle_text_message(event):
             response = get_ai_response(profile.display_name, text)
             while count == 0:
                 line_bot_api.reply_message_with_http_info(
-                        ReplyMessageRequest(
-                            reply_token=event.reply_token, messages=[
-                                TextMessage(text="今日は何方言にします？")],
-                        )
+                    ReplyMessageRequest(
+                        reply_token=event.reply_token, messages=[
+                            TextMessage(text="今日は何方言にします？")],
                     )
-                    count = count + 1
+                )
+                count = count + 1
                 
             if "沖縄弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は沖縄弁でおじさん口調，ハイテンションで絵文字を使います。
