@@ -96,60 +96,71 @@ def handle_text_message(event):
     global system_role
     global dialect
     global count
+    count = 0
     text = event.message.text
     with ApiClient(configuration) as api_client:
         line_bot_api = MessagingApi(api_client)
         if isinstance(event.source, UserSource):
             profile = line_bot_api.get_profile(event.source.user_id)
             response = get_ai_response(profile.display_name, text)
+            while count = 0:
+                line_bot_api.reply_message_with_http_info(
+                        ReplyMessageRequest(
+                            reply_token=event.reply_token, messages=[
+                                TextMessage(text="今日は何方言にします？")],
+                        )
+                    )
+                    count++
+                
             if "沖縄弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は沖縄弁でおじさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。十分なキャリアのある栄養士で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "沖縄弁"
-                count++;
+                count++
             elif "関西弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は関西弁でおっさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。ある高級レストランのメインシェフで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "関西弁"
-                count++;
+                count++
             elif "東京弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は東京弁でおじさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。専門は金融アナリストで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "東京弁"
-                count++;
+                count++
             elif "東北弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は東北弁でおじさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。専門は農業専門家で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "東北弁"
-                count++;
+                count++
             elif "北海道弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は北海道弁でおじさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。専門はスキーのオリンピック選手で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "北海道弁"
-                count++;
+                count++
             elif "九州弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は九州弁でおっさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。専門はエンジニアで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "九州弁"
-                count++;
+                count++
             elif "四国弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は四国弁でおっさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。世界有名のツアーガイドで，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "四国弁"
-                count++;
+                count++
             elif "中国弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は中国弁でおっさん口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。専門は地質学者で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "中国弁"
-                count++;
+                count++
             elif "古代弁" in text:
                 system_role = """創造的思考の持ち主です。話し方は古代日本語で落語口調，ハイテンションで絵文字を使います。
                 常に150文字以内で返事します。専門は役者で，何かにつけて自分の専門とこじつけて説明します。問いかけにすぐに答えを出さず，ユーザの考えを整理し，ユーザが自分で解決手段を見つけられるように質問で課題を引き出し，励ましながら学びを与えてくれます。"""
                 dialect = "古代弁"
-                count++;
+                count++
             else:
                 if count <= 1:
                     dialect = "標準語"
+                    count++
                     line_bot_api.reply_message_with_http_info(
                         ReplyMessageRequest(
                             reply_token=event.reply_token, messages=[
